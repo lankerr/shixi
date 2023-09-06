@@ -1,0 +1,64 @@
+@startuml struct3
+
+class Utils {
+  + load_model(model_path: str)
+  + extend_maps(word2id: dict, tag2id: dict, for_crf: bool)
+  + prepocess_data_for_lstmcrf(word_lists: list, tag_lists: list, test: bool)
+  + open(file_path: str, mode: str, encoding: str)
+  + build_map(lists: list)
+  + save_model(model, model_path: str)
+  + flatten_lists(lists: list)
+}
+
+class Data {
+  + build_corpus(split: str, make_vocab: bool, data_dir: str)
+  + build_infer_corpus(sentence: str)
+}
+
+class Metrics {
+  + __init__(golden_tags: list, predict_tags: list, remove_O: bool)
+  + cal_precision()
+  + cal_recall()
+  + cal_f1()
+  + report_scores()
+  + count_correct_tags()
+  + _cal_weighted_average()
+  + _remove_Otags()
+  + report_confusion_matrix()
+}
+
+package Models {
+  class HMMModel {
+    + train(train_word_lists: list, train_tag_lists: list, word2id: dict, tag2id: dict)
+    + test(test_word_lists: list, word2id: dict, tag2id: dict)
+  }
+
+  class CRFModel {
+    + train(train_word_lists: list, train_tag_lists: list)
+    + test(test_word_lists: list)
+  }
+
+  class BILSTM_Model {
+    + __init__(vocab_size: int, out_size: int, crf: bool)
+    + train(train_word_lists: list, train_tag_lists: list, dev_word_lists: list, dev_tag_lists: list, word2id: dict, tag2id: dict)
+    + test(test_word_lists: list, test_tag_lists: list, word2id: dict, tag2id: dict)
+  }
+}
+
+class Evaluation {
+  + ensemble_evaluate(results: list, targets: list, remove_O: bool)
+}
+
+class Main {
+  + main()
+}
+
+Main --|> Data
+Main --|> Metrics
+Main --|> Models
+Main --|> Evaluation
+
+Data --|> Utils
+Evaluation --|> Utils
+
+@enduml

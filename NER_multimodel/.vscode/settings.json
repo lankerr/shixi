@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "*.v-23": "verilog",
+        "*.v-55": "verilog",
+        "*.veo": "verilog",
+        "iostream": "cpp",
+        "ostream": "cpp",
+        "*.tcc": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp"
+    }
+}

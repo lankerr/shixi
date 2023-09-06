@@ -1,0 +1,15 @@
+@startuml
+
+class ClassA {
+  +属性1: 类型1
+}
+
+class ClassB {
+  +属性2: 类型2
+}
+
+ClassA -[hidden]-> ClassB
+ClassA -[hidden]-> ClassB
+ClassA -[hidden]-> ClassB
+
+@enduml
