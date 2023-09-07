@@ -1,63 +1,25 @@
 @startuml struct
+participant Main as "Main函数"
+participant DataPy as "data.py"
+participant ResumeNER as "ResumeNER数据"
+participant BertVectorizer as "BertVectorizer"
+participant ModelHandler as "ModelHandler类"
+participant HMM as "HMM模型"
+participant CRF as "CRF模型"
+participant BiLSTM_HMM as "BiLSTM+HMM模型"
+participant BiLSTM_CRF as "BiLSTM+CRF模型"
+participant CKPT as "ckpt文件夹"
+participant Test as "Test"
 
-class Project {
-    +名称
-    +描述
-}
-
-class Code {
-    +源代码
-    +文档
-}
-
-class Data {
-    +数据集
-    +数据处理
-}
-
-class ResumeNer
-{
-    +来自顶级会议
-    +简历的NER
-}
-
-class ckpts
-{
-    +模型保存
-    +模型复用
-}
-
-class HanLPSystem {
-    +传统分词器
-    +传统NER
-}
-
-class hanlp4_5_4{
-    +hanlp系统
-}
-
-class BertVectorizer {
-    +文本向量化
-}
-
-class Model {
-    +HMM
-    +CRF
-    +LSTM+HMM
-    +LIST+CRF
-}
-
-Project --|> Code
-Project --|>  Data
-Project --|>  HanLPSystem
-Code --^  BertVectorizer: 前期处理
-Code --|>  Model
-Data --|>  ResumeNer
-Data --|>  ckpts
-Data --|>  hanlp4_5_4
-Model --|>  HMM
-Model --|>  CRF
-Model --|>  LSTM_HMM
-Model --|>  LIST_CRF
-
+Main -> DataPy: 调用data.py
+DataPy --> ResumeNER: 处理数据
+Main -> BertVectorizer: 调用BertVectorizer
+BertVectorizer -> ResumeNER: 向量化数据
+Main -> ModelHandler: 调用ModelHandler类
+ModelHandler -> HMM: 使用HMM模型处理数据
+ModelHandler -> CRF: 使用CRF模型处理数据
+ModelHandler -> BiLSTM_HMM: 使用BiLSTM+HMM模型处理数据
+ModelHandler -> BiLSTM_CRF: 使用BiLSTM+CRF模型处理数据
+ModelHandler --> CKPT: 保存训练好的数据
+Test --> CKPT: 调用ckpt中的模型
 @enduml
